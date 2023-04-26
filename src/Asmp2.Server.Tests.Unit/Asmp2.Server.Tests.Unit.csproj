@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Asmp2.Server.Application\Asmp2.Server.Application.csproj" />
-    <ProjectReference Include="..\Asmp2.Server.Core\Asmp2.Server.Core.csproj" />
     <ProjectReference Include="..\Asmp2.Server\Asmp2.Server.csproj" />
   </ItemGroup>
 
