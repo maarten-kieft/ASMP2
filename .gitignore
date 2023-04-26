@@ -1,0 +1,6 @@
+*.pyc
+/.idea
+**/obj/*
+**/bin/*
+/src/*.user
+/src/.vs/*

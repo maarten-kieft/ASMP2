@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <UserSecretsId>f7a66d81-4653-4c3a-b3fa-5d8e63215125</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Asmp2.Client\Asmp2.Client.csproj" />
+    <ProjectReference Include="..\Asmp2.Server.Application\Asmp2.Server.Application.csproj" />
+    <ProjectReference Include="..\Asmp2.Server.Core\Asmp2.Server.Core.csproj" />
+    <ProjectReference Include="..\Asmp2.Server.Infrastructure\Asmp2.Server.Infrastructure.csproj" />
+    <ProjectReference Include="..\Asmp2.Shared\Asmp2.Shared.csproj" />
+  </ItemGroup>
+
+
+</Project>

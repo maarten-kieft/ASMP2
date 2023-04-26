@@ -1,0 +1,1 @@
+global using Asmp2.Server.Core.Model;
