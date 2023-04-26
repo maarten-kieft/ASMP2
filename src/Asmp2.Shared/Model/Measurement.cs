@@ -5,5 +5,5 @@ public record Measurement(
     DateTime Timestamp,
     PowerReading PowerUsage,
     PowerReading PowerSupply,
-    GasReading GasUsage
+    GasReading? GasUsage
 );

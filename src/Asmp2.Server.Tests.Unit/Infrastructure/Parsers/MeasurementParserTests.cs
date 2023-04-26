@@ -8,7 +8,7 @@ public class MeasurementParserTests
     private readonly MeasurementParser _sut = new();
 
     [Fact]
-    public void Parse_WhenValidRawMeasurement_ThenParseResult()
+    public void Parse_WhenValidRawMeasurementWithoutGas_ThenParseResult()
     {
         var input = new List<string>
         {
@@ -43,7 +43,7 @@ public class MeasurementParserTests
     }
 
     [Fact]
-    public void Parse_WhenContainsCurrentUsage_ThenParseCorrectly()
+    public void Parse_WhenValidRawMessageWithGas_ThenParseResult()
     {
         var input = new List<string>
         {

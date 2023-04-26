@@ -47,9 +47,16 @@ public class MeasurementParser : IMeasurementParser
         );
     }
 
-    private GasReading ParseGasUsage(List<string> lines)
+    private GasReading? ParseGasUsage(List<string> lines)
     {
-        var total = ParseLine("0-1:24.2.1", lines);
+        var gasReadingPattern = "0-1:24.2.1";
+
+        if (!lines.Any(l => l.Contains(gasReadingPattern)))
+        {
+            return null;
+        }
+
+        var total = ParseLine(gasReadingPattern, lines);
 
         return new GasReading(
             false,
