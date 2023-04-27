@@ -1,20 +1,23 @@
 ﻿using Asmp2.Server.Core.Processors;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Asmp2.Server.Application.Processors;
 public class ProcessorHost : IProcessorHost
 {
-    private readonly IEnumerable<IProcessor> _processors;
-
-    public ProcessorHost(IEnumerable<IProcessor> processors)
+    public ProcessorHost(IServiceProvider services)
     {
-        _processors = processors ?? throw new ArgumentNullException(nameof(processors));
+        Services = services ?? throw new ArgumentNullException(nameof(services));
     }
+
+    public IServiceProvider Services { get; }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
+        var processors = Services.GetServices<IProcessor>();
+
         try
         {
-            await Task.WhenAll(_processors.Select(p => p.RunAsync(cancellationToken)));
+            await Task.WhenAll(processors.Select(p => p.RunAsync(cancellationToken)));
         }
         catch (Exception ex)
         {

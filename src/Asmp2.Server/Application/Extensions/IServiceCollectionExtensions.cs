@@ -25,6 +25,6 @@ public static class IServiceCollectionExtensions
     public static IServiceCollection AddMessaging(this IServiceCollection services)
     {
         return services
-            .AddTransient<IMessageBroker, MessageBroker>();
+            .AddSingleton<IMessageBroker, MessageBroker>();
     }
 }

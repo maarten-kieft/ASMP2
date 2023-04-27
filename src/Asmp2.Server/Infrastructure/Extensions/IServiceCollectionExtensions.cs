@@ -17,7 +17,8 @@ public static class IServiceCollectionExtensions
     public static IServiceCollection AddIOServices(this IServiceCollection services)
     {
         return services
-            .AddTransient<ISerialReader, SerialReader>()
+            //.AddTransient<ISerialReader, SerialReader>()
+            .AddTransient<ISerialReader, FakeSerialReader>()
             .AddTransient<IMeasurementParser, MeasurementParser>();
     }
 }
