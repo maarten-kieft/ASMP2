@@ -28,6 +28,8 @@ public class ReadProcessor : IProcessor
     {
         var message = new MeasurementMessage(measurement, this);
 
+        Console.WriteLine("Huidige stroom:" + measurement.PowerUsage.Current);
+
         _messageBroker.Publish(message);
     }
 }

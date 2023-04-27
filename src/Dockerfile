@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:7.0.5-bullseye-slim-arm64v8 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.5-jammy-arm32v7 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443

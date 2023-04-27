@@ -57,10 +57,8 @@ public class MeasurementParserTests
             "0-1:24.2.1(00500.34*m3)"
         };
 
-
-
         var result = _sut.Parse(input);
-
+        result.Meter.Id.Should().Be("4530303237303030303130313334353136");
         result.PowerUsage.Should().NotBeNull();
         result.PowerUsage.Current.Should().Be((decimal)0.449);
         result.PowerUsage.TotalLow.Should().Be((decimal)8944.105);

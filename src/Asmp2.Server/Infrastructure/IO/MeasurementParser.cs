@@ -6,7 +6,7 @@ namespace Asmp2.Server.Application.Parsers;
 
 public class MeasurementParser : IMeasurementParser
 {
-    private const string linePattern = @"^([^\(]*)(\([^\)]*\))*\(([^\)]*)\)$";
+    private const string linePattern = @"^([^\(]*)(\([^\)]*\))*\(([^\)]*)\)";
 
     public Measurement Parse(List<string> lines)
     {

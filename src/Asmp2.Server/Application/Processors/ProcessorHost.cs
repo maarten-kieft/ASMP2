@@ -1,5 +1,4 @@
 ﻿using Asmp2.Server.Core.Processors;
-using System.Linq;
 
 namespace Asmp2.Server.Application.Processors;
 public class ProcessorHost : IProcessorHost
@@ -11,8 +10,16 @@ public class ProcessorHost : IProcessorHost
         _processors = processors ?? throw new ArgumentNullException(nameof(processors));
     }
 
-    public Task RunAsync(CancellationToken cancellationToken = default)
+    public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        return Task.WhenAll(_processors.Select(p => p.RunAsync(cancellationToken)));
+        try
+        {
+            await Task.WhenAll(_processors.Select(p => p.RunAsync(cancellationToken)));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 }

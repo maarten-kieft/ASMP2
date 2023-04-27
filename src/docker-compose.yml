@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  web:
+    image: kieftse/asmp2:latest
+    ports:
+      - "80:80"
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
