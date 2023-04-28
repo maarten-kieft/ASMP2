@@ -35,7 +35,7 @@ public class Program
 
     private static void ConnectHubsToMessageBroker(IHost webHost, IProcessorHost processorHost)
     {
-        var hubContext = (IHubContext<MessageHub>)webHost.Services.GetService(typeof(IHubContext<MessageHub>));
+        var hubContext = (IHubContext<MeasurementHub>)webHost.Services.GetService(typeof(IHubContext<MeasurementHub>));
         var messageBroker = (IMessageBroker)processorHost.Services.GetService(typeof(IMessageBroker));
 
         var messageTypes = typeof(Message).Assembly
@@ -48,8 +48,7 @@ public class Program
         foreach (var messageType in messageTypes)
         {
             messageBroker.Subscribe(messageType, (message) => {
-                var textMessage = $"current reading:{((MeasurementMessage)message).Measurement.PowerUsage.Current}";
-                hubContext.Clients.All.SendAsync("Message", textMessage);
+                hubContext.Clients.All.SendAsync("Measurement", ((MeasurementMessage)message).Measurement);
             });
         }
     }

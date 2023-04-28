@@ -1,32 +1,28 @@
-﻿@using Microsoft.AspNetCore.SignalR.Client
+﻿@using Asmp2.Shared.Model;
+@using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager Navigation
 @page "/"
 
-<h1>Hello, world!</h1>
+<h1>@currentMeasurement?.PowerUsage.Current</h1>
 
 
-<ul id="messagesList">
-    @foreach (var message in messages)
-    {
-        <li>@message</li>
-    }
-</ul>
+
 
 @code {
     private HubConnection? hubConnection;
-    private List<string> messages = new List<string>();
+    private Measurement? currentMeasurement;
     private string? userInput;
     private string? messageInput;
 
     protected override async Task OnInitializedAsync()
     {
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/messagehub"))
+            .WithUrl(Navigation.ToAbsoluteUri("/measurementhub"))
             .Build();
 
-        hubConnection.On<string>("Message", (message) =>
+        hubConnection.On<Measurement>("Measurement", (measurement) =>
         {  
-            messages.Add(message);
+            currentMeasurement = measurement;
             InvokeAsync(StateHasChanged);
         });
 

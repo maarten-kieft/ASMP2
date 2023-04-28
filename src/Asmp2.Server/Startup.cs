@@ -41,7 +41,7 @@ namespace Asmp2.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<MessageHub>("/messagehub");
+                endpoints.MapHub<MeasurementHub>("/measurementhub");
                 endpoints.MapFallbackToFile("index.html");
                 endpoints.MapGet("/hoi", async context =>
                 {
