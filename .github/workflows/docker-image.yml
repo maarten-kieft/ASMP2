@@ -23,17 +23,17 @@ jobs:
        with:
         dotnet-version: 7.0.x
 
-     - name: Execute unit tests
-       run: dotnet test ./src/Asmp2.Server.Tests.Unit/Asmp2.Server.Tests.Unit.csproj
-
-     - name: Build the Docker image
-       run: docker build ./src --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
-
      - name: Login to DockerHub
        uses: docker/login-action@v2
        with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+     - name: Execute unit tests
+       run: dotnet test ./src/Asmp2.Server.Tests.Unit/Asmp2.Server.Tests.Unit.csproj
+
+     - name: Build the Docker image
+       run: docker build ./src --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
 
      - name: Push the Docker image
        run: docker push kieftse/asmp2:latest
