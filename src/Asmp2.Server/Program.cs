@@ -35,21 +35,17 @@ public class Program
 
     private static void ConnectHubsToMessageBroker(IHost webHost, IProcessorHost processorHost)
     {
-        var hubContext = (IHubContext<MeasurementHub>)webHost.Services.GetService(typeof(IHubContext<MeasurementHub>));
-        var messageBroker = (IMessageBroker)processorHost.Services.GetService(typeof(IMessageBroker));
+        var hubContext = webHost.Services.GetService(typeof(IHubContext<MeasurementHub>)) as IHubContext<MeasurementHub>;
+        var messageBroker = processorHost.Services.GetService(typeof(IMessageBroker)) as IMessageBroker;
 
-        var messageTypes = typeof(Message).Assembly
-           .GetTypes()
-           .Where(t =>
-               t.IsAssignableTo(typeof(Message)) &&
-               !t.IsAbstract
-           );
-
-        foreach (var messageType in messageTypes)
+        if (hubContext == null || messageBroker == null)
         {
-            messageBroker.Subscribe(messageType, (message) => {
-                hubContext.Clients.All.SendAsync("Measurement", ((MeasurementMessage)message).Measurement);
-            });
+            throw new InvalidOperationException("Not able to fetch hubcontext and/or messageBroker");
         }
+
+        messageBroker.Subscribe<MeasurementMessage>((message) =>
+        {
+            hubContext.Clients.All.SendAsync("Measurement", message.Measurement);
+        });
     }
 }

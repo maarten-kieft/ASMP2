@@ -23,24 +23,14 @@ public class MessageBroker : IMessageBroker
 
     public void Subscribe<T>(Action<T> action) where T : Message
     {
-        Subscribe(typeof(T), (Action<Message>)action);
-    }
-
-    public void Subscribe(Type messageType, Action<Message> action)
-    {
-        if(messageType.IsAssignableFrom(typeof(Message)))
+        if (!subscribers.ContainsKey(typeof(T)))
         {
-            throw new InvalidOperationException("Cannot subscribe to non message types");
+            subscribers.Add(typeof(T), new List<Action<Message>>());
         }
 
-        if (!subscribers.ContainsKey(messageType))
+        subscribers[typeof(T)].Add((Message message) =>
         {
-            subscribers.Add(messageType, new List<Action<Message>>());
-        }
-
-        subscribers[messageType].Add((Message message) =>
-        {
-            action(message);
+            action((T)message);
         });
     }
 }
