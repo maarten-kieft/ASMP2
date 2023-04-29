@@ -24,7 +24,7 @@ jobs:
         dotnet-version: 7.0.x
 
      - name: Execute unit tests
-       run: dotnet test ./src/asmp2.sln
+       run: dotnet test $env:Wap_Project_Directory/src/asmp2.sln
 
      - name: Build the Docker image
        run: docker build ./src --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
