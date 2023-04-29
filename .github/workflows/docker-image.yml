@@ -27,5 +27,4 @@ jobs:
        run: dotnet test ./src/asmp2.sln
 
      - name: Build the Docker image
-       uses: actions/checkout@v3
        run: docker build ./src --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
