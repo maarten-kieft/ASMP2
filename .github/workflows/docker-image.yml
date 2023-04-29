@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file src/Dockerfile --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
+      run: docker build ./src --tag kieftse/asmp2:$(date +%s) --tag kieftse/asmp2:latest
