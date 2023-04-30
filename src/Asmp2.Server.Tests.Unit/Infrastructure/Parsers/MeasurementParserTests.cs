@@ -68,6 +68,6 @@ public class MeasurementParserTests
         result.PowerSupply.TotalLow.Should().Be((decimal)3.1);
         result.PowerSupply.TotalRegular.Should().Be((decimal)6.2);
         result.GasUsage.Should().NotBeNull();
-        result.GasUsage.Total.Should().Be((decimal)500.34);
+        result.GasUsage!.Total.Should().Be((decimal)500.34);
     }
 }

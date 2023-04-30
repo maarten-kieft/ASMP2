@@ -1,3 +1,4 @@
+using Asmp2.Server.Persistence.Extensions;
 using Asmp2.Server.Web.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +20,7 @@ namespace Asmp2.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddPersistance(Configuration);
             services.AddSignalR();
             services.AddControllersWithViews();
             services.AddRazorPages();

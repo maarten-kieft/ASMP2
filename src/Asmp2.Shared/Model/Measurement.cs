@@ -2,7 +2,7 @@
 
 public record Measurement(
     Meter Meter,
-    DateTime Timestamp,
+    DateTimeOffset Timestamp,
     PowerReading PowerUsage,
     PowerReading PowerSupply,
     GasReading? GasUsage = default
