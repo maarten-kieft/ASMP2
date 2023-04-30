@@ -8,8 +8,11 @@ WORKDIR /src
 COPY ["Asmp2.Server/Asmp2.Server.csproj", "Asmp2.Server/"]
 COPY ["Asmp2.Shared/Asmp2.Shared.csproj", "Asmp2.Shared/"]
 COPY ["Asmp2.Client/Asmp2.Client.csproj", "Asmp2.Client/"]
+COPY ["Asmp2.Server.Tests.Unit/Asmp2.Server.Tests.Unit.csproj", "Asmp2.Server.Tests.Unit/"]
 RUN dotnet restore "Asmp2.Server/Asmp2.Server.csproj"
+RUN dotnet restore "Asmp2.Server.Tests.Unit/Asmp2.Server.Tests.Unit.csproj"
 COPY . .
+RUN dotnet test "Asmp2.Server.Tests.Unit/Asmp2.Server.Tests.Unit.csproj"
 WORKDIR "/src/Asmp2.Server"
 RUN dotnet build "Asmp2.Server.csproj" -c Release -o /app/build
 
