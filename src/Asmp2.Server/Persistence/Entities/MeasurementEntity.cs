@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Asmp2.Server.Persistence.Models;
+namespace Asmp2.Server.Persistence.Entities;
 
 [Index(nameof(Timestamp))]
 public class MeasurementEntity

@@ -1,4 +1,4 @@
-﻿using Asmp2.Server.Persistence.Models;
+﻿using Asmp2.Server.Persistence.Entities;
 
 namespace Asmp2.Server.Persistence.Mappers;
 

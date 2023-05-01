@@ -1,7 +1,7 @@
 ﻿using Asmp2.Server.Application.Repositories;
 using Asmp2.Server.Persistence.Contexts;
 using Asmp2.Server.Persistence.Mappers;
-using Asmp2.Server.Persistence.Models;
+using Asmp2.Server.Persistence.Entities;
 
 namespace Asmp2.Server.Persistence.Repositories;
 

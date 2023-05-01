@@ -12,11 +12,11 @@ public class ReadProcessorTests
     private readonly Mock<ISerialReader> _serialReaderMock = new();
     private readonly Mock<IMessageBroker> _messageBrokerMock = new();
     private readonly Mock<IMeasurementRepository> _measurementRepository = new();
-    private readonly ReadProcessor _sut;
+    private readonly Reader _sut;
 
     public ReadProcessorTests()
     {
-        _sut = new ReadProcessor(
+        _sut = new Reader(
             _serialReaderMock.Object,
             _messageBrokerMock.Object,
             _measurementRepository.Object
@@ -26,7 +26,7 @@ public class ReadProcessorTests
     [Fact]
     public void Constructor_WhenNullProvidedForSerialReader_ThenArgumentNullException()
     {
-        var exception = Assert.Throws<ArgumentNullException>(() => new ReadProcessor(null!, _messageBrokerMock.Object, _measurementRepository.Object));
+        var exception = Assert.Throws<ArgumentNullException>(() => new Reader(null!, _messageBrokerMock.Object, _measurementRepository.Object));
 
         exception.Message.Should().Contain("serialReader");
     }
@@ -34,7 +34,7 @@ public class ReadProcessorTests
     [Fact]
     public void Constructor_WhenNullProvidedForMessageBroker_ThenArgumentNullException()
     {
-        var exception = Assert.Throws<ArgumentNullException>(() => new ReadProcessor(_serialReaderMock.Object, null!, _measurementRepository.Object));
+        var exception = Assert.Throws<ArgumentNullException>(() => new Reader(_serialReaderMock.Object, null!, _measurementRepository.Object));
 
         exception.Message.Should().Contain("messageBroker");
     }
@@ -42,7 +42,7 @@ public class ReadProcessorTests
     [Fact]
     public void Constructor_WhenNullProvidedForMeasurementRepository_ThenArgumentNullException()
     {
-        var exception = Assert.Throws<ArgumentNullException>(() => new ReadProcessor(_serialReaderMock.Object, _messageBrokerMock.Object, null!));
+        var exception = Assert.Throws<ArgumentNullException>(() => new Reader(_serialReaderMock.Object, _messageBrokerMock.Object, null!));
 
         exception.Message.Should().Contain("measurementRepository");
     }

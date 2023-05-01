@@ -19,7 +19,8 @@ public static class IServiceCollectionExtensions
     {
         return services
             .AddTransient<IProcessorHost, ProcessorHost>()
-            .AddTransient<IProcessor, ReadProcessor>();
+            .AddTransient<IProcessor, Reader>()
+            .AddTransient<IProcessor, Aggregator>();
     }
 
     public static IServiceCollection AddMessaging(this IServiceCollection services)

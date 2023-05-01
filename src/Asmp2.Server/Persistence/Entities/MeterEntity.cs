@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Asmp2.Server.Persistence.Models;
+namespace Asmp2.Server.Persistence.Entities;
 
 public class MeterEntity
 {

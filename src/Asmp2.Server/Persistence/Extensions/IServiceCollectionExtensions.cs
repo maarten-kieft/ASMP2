@@ -22,7 +22,8 @@ public static class IServiceCollectionExtensions
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         return services
-            .AddTransient<IMeasurementRepository, MeasurementRepository>();
+            .AddTransient<IMeasurementRepository, MeasurementRepository>()
+            .AddTransient<IStatisticRepository, StatisticRepository>();
     }
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)

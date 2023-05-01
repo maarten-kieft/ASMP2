@@ -4,13 +4,13 @@ using Asmp2.Server.Core.Messaging;
 
 namespace Asmp2.Server.Core.Processors;
 
-public class ReadProcessor : IProcessor
+public class Reader : IProcessor
 {
     private readonly ISerialReader _serialReader;
     private readonly IMessageBroker _messageBroker;
     private readonly IMeasurementRepository _measurementRepository;
 
-    public ReadProcessor(
+    public Reader(
         ISerialReader serialReader,
         IMessageBroker messageBroker,
         IMeasurementRepository measurementRepository
