@@ -17,19 +17,19 @@ public class MeasurementEntity
     [Precision(6, 3)]
     public decimal PowerUsageCurrent { get; set; }
 
-    [Precision(6, 3)]
+    [Precision(18, 3)]
     public decimal PowerUsageTotalLow{ get; set; }
 
-    [Precision(6, 3)]
+    [Precision(18, 3)]
     public decimal PowerUsageTotalRegular { get; set; }
 
-    [Precision(6, 3)]
+    [Precision(18, 3)]
     public decimal PowerSupplyCurrent { get; set; }
 
-    [Precision(6, 3)]
+    [Precision(18, 3)]
     public decimal PowerSupplyTotalLow { get; set; }
 
-    [Precision(6, 3)]
+    [Precision(18, 3)]
     public decimal PowerSupplyTotalRegular { get; set; }
 
     public bool GasOpen { get; set; }
