@@ -1,5 +1,6 @@
 ﻿using Asmp2.Server.Application.Repositories;
 using Asmp2.Server.Persistence.Contexts;
+using Asmp2.Server.Persistence.Mappers;
 using Asmp2.Server.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,8 @@ public static class IServiceCollectionExtensions
     {
         return services
             .AddRepositories()
-            .AddDbContexts(configuration);
+            .AddDbContexts(configuration)
+            .AddMappers();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
@@ -36,5 +38,11 @@ public static class IServiceCollectionExtensions
             .AddDbContextPool<AsmpContext>(options => {
                 options.UseMySQL(connectionString);
             });
+    }
+
+    private static IServiceCollection AddMappers(this IServiceCollection services)
+    {
+        return services
+            .AddTransient<IMeasurementMapper, MeasurementMapper>();
     }
 }

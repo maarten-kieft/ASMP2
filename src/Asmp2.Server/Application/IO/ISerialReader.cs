@@ -3,5 +3,5 @@
 public interface ISerialReader
 {
     Task RunAsync(CancellationToken cancellationToken);
-    void Subscribe(Action<Measurement> processMessage);
+    void Subscribe(Func<Measurement, Task> processMessage);
 }

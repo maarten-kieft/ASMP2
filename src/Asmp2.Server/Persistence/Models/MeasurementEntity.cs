@@ -26,7 +26,7 @@ public class MeasurementEntity
 
     public decimal PowerSupplyTotalRegular { get; set; }
 
-    public bool? GasOpen { get; set; }
+    public bool GasOpen { get; set; }
 
-    public decimal? GasTotal { get; set; }
+    public decimal GasTotal { get; set; }
 }

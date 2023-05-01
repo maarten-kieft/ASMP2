@@ -8,7 +8,7 @@ namespace Asmp2.Server.IO;
 public class SerialReader : ISerialReader
 {
     private readonly SerialPort _serialPort = new();
-    private readonly List<Action<Measurement>> subscribers = new();
+    private readonly List<Func<Measurement, Task>> subscribers = new();
     private readonly IMeasurementParser _parser;
 
     public SerialReader(IMeasurementParser parser)
@@ -43,7 +43,7 @@ public class SerialReader : ISerialReader
         return Task.CompletedTask;
     }
 
-    private Task Readasync(CancellationToken cancellationToken)
+    private async Task Readasync(CancellationToken cancellationToken)
     {
         var lines = new List<string>();
 
@@ -53,28 +53,26 @@ public class SerialReader : ISerialReader
 
             if (line[0] == '!')
             {
-                Publish(lines);
+                await PublishAsync(lines);
                 lines = new List<string>();
                 continue;
             }
 
             lines.Add(line);
         }
-
-        return Task.CompletedTask;
     }
 
-    private void Publish(List<string> lines)
+    private async Task PublishAsync(List<string> lines)
     {
         var measurement = _parser.Parse(lines);
 
         foreach (var subscriber in subscribers)
         {
-            subscriber.Invoke(measurement);
+            await subscriber(measurement);
         }
     }
 
-    public void Subscribe(Action<Measurement> processMessage)
+    public void Subscribe(Func<Measurement, Task> processMessage)
     {
         subscribers.Add(processMessage);
     }
