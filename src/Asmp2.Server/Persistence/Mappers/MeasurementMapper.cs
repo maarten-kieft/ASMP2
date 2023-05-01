@@ -8,8 +8,6 @@ public class MeasurementMapper : IMeasurementMapper
     {
         return new MeasurementEntity
         {
-            Id = 1,
-            Meter = new MeterEntity { Id =1, Name = source.Meter.Id },
             Timestamp = source.Timestamp,
             PowerUsageCurrent = source.PowerUsage.Current,
             PowerUsageTotalLow = source.PowerUsage.TotalLow,

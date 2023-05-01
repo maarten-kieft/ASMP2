@@ -12,9 +12,21 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var webHost = BuildWebHost(args);
-        var configuration = webHost.Services.GetService(typeof(IConfiguration)) as IConfiguration;
-        var processorHost = ProcessorHostBuilder.Build(configuration);
+        var webHost = Host
+            .CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            })
+            .Build();
+
+        var configuration = webHost
+            .Services
+            .GetService(typeof(IConfiguration)) as IConfiguration 
+            ?? throw new InvalidOperationException("Unable to resolve configuration");
+
+        var processorHost = ProcessorHostBuilder
+            .Build(configuration!);
 
         ConnectHubsToMessageBroker(webHost, processorHost);
 
@@ -22,17 +34,6 @@ public class Program
             webHost.RunAsync(),
             processorHost.RunAsync()
         ).GetAwaiter().GetResult();
-    }
-
-    private static IHost BuildWebHost(string[] args)
-    {
-        return Host
-            .CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            })
-        .Build();
     }
 
     private static void ConnectHubsToMessageBroker(IHost webHost, IProcessorHost processorHost)

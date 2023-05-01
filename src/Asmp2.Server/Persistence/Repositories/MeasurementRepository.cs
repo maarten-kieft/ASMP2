@@ -1,6 +1,7 @@
 ﻿using Asmp2.Server.Application.Repositories;
 using Asmp2.Server.Persistence.Contexts;
 using Asmp2.Server.Persistence.Mappers;
+using Asmp2.Server.Persistence.Models;
 
 namespace Asmp2.Server.Persistence.Repositories;
 
@@ -17,8 +18,16 @@ public class MeasurementRepository : IMeasurementRepository
 
     public async Task SaveMeasurementAsync(Measurement measurement)
     {
-       var measurementEntity = _measurementMapper.MapModelToEntity(measurement);
-        await _context.AddAsync(measurementEntity);
+        var meterEntity = _context.Meters.FirstOrDefault(m => m.Name == measurement.Meter.Id) ?? new MeterEntity { Name = measurement.Meter.Id };
+        var measurementEntity = _measurementMapper.MapModelToEntity(measurement);
+
+        if (!meterEntity.Id.HasValue)
+        {
+            _context.Meters.Add(meterEntity);
+            await _context.SaveChangesAsync();
+        }
+
+        meterEntity.Measurements.Add(measurementEntity);
         await _context.SaveChangesAsync();
     }
 }

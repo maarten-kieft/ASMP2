@@ -20,6 +20,11 @@ public class ProcessorHost : IProcessorHost
         
         try
         {
+            if(context == null)
+            {
+                throw new InvalidOperationException("Not able to resolve asmp context");
+            }
+
             context.Database.EnsureCreated();
 
             await Task.WhenAll(processors.Select(p => p.RunAsync(cancellationToken)));
