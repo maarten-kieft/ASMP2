@@ -27,13 +27,9 @@ public static class IServiceCollectionExtensions
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetValue<string>("asmp:connectionstring");
+        var connectionString = configuration.GetValue<string>("asmp:connectionstring")
+            ?? throw new InvalidOperationException("Cannot start persistence layer since the connectionstring setting is not set");
         
-        if(connectionString == null)
-        {
-            throw new InvalidOperationException("Cannot start persistence layer since the connectionstring setting is not set");
-        }
-
         return services
             .AddDbContextPool<AsmpContext>(options => {
                 options.UseMySQL(connectionString);

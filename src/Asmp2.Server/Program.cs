@@ -38,13 +38,11 @@ public class Program
 
     private static void ConnectHubsToMessageBroker(IHost webHost, IProcessorHost processorHost)
     {
-        var hubContext = webHost.Services.GetService(typeof(IHubContext<MeasurementHub>)) as IHubContext<MeasurementHub>;
-        var messageBroker = processorHost.Services.GetService(typeof(IMessageBroker)) as IMessageBroker;
+        var hubContext = webHost.Services.GetService(typeof(IHubContext<MeasurementHub>)) as IHubContext<MeasurementHub>
+            ?? throw new InvalidOperationException("Unable to resolve hubcontext");
 
-        if (hubContext == null || messageBroker == null)
-        {
-            throw new InvalidOperationException("Not able to fetch hubcontext and/or messageBroker");
-        }
+        var messageBroker = processorHost.Services.GetService(typeof(IMessageBroker)) as IMessageBroker
+            ?? throw new InvalidOperationException("Unable to resolve messagebroker");
 
         messageBroker.Subscribe<MeasurementMessage>((message) =>
         {

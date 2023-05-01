@@ -67,13 +67,9 @@ public class MeasurementParser : IMeasurementParser
     private Meter ParseMeterDetails(List<string> lines)
     {
         var meterIdKeyPattern = "0-0:96.1.1";
-        var line = lines.FirstOrDefault(l => l.Contains(meterIdKeyPattern));
+        var line = lines.FirstOrDefault(l => l.Contains(meterIdKeyPattern))
+            ?? throw new ParseMeasurementException($"Not able to find the meter details in the message {string.Join(',', lines)}");
         
-        if(line == null)
-        {
-            throw new ParseMeasurementException($"Not able to find the meter details in the message {string.Join(',', lines)}");
-        }
-
         var match = Regex.Match(line, linePattern);
 
         if (!match.Success)

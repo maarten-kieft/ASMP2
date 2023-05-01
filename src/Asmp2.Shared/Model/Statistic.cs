@@ -2,9 +2,9 @@
 
 public record Statistic(
     Meter Meter,
-    DateTime TimestampStart,
-    DateTime TimestampEnd,
-    PowerReading PowerUsage,
-    PowerReading PowerSupply,
-    GasReading GasUsage
+    DateTimeOffset TimestampStart,
+    DateTimeOffset TimestampEnd,
+    PowerStatistic PowerUsage,
+    PowerStatistic PowerSupply,
+    GasStatistic GasUsage
 );
