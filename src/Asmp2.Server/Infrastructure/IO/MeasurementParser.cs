@@ -12,7 +12,7 @@ public class MeasurementParser : IMeasurementParser
     {
         var measurement = new Measurement(
             Meter: ParseMeterDetails(lines),
-            Timestamp: DateTime.Now,
+            Timestamp: DateTimeOffset.UtcNow,
             PowerUsage: ParsePowerUsage(lines),
             PowerSupply: ParsePowerSupply(lines),
             GasUsage: ParseGasUsage(lines)

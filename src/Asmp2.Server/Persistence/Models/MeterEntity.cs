@@ -8,7 +8,7 @@ public class MeterEntity
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int? Id { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public List<MeasurementEntity> Measurements { get; set; } = new List<MeasurementEntity>();
 }
