@@ -8,16 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Asmp2.Server;
 public static class ProcessorHostBuilder
 {
-    public static IProcessorHost Build()
+    public static IProcessorHost Build(IConfiguration configuration)
     {
-        var builder = new ConfigurationBuilder()
-            .AddEnvironmentVariables();
-
-        var configuration = builder.Build();
-
         var provider = new ServiceCollection()
             .AddApplicationServices()
-            .AddInfrastructureServices()
+            .AddInfrastructureServices(configuration)
             .AddPersistance(configuration)
             .BuildServiceProvider();
 

@@ -1,4 +1,6 @@
-﻿using Asmp2.Server.Core.Processors;
+﻿using Asmp2.Client;
+using Asmp2.Server.Core.Processors;
+using Asmp2.Server.Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Asmp2.Server.Application.Processors;
@@ -14,9 +16,12 @@ public class ProcessorHost : IProcessorHost
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var processors = Services.GetServices<IProcessor>();
-
+        var context = Services.GetService<AsmpContext>();
+        
         try
         {
+            context.Database.EnsureCreated();
+
             await Task.WhenAll(processors.Select(p => p.RunAsync(cancellationToken)));
         }
         catch (Exception ex)

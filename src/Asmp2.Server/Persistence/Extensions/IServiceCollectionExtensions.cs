@@ -25,7 +25,7 @@ public static class IServiceCollectionExtensions
 
     private static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("connectionString");
+        var connectionString = configuration.GetValue<string>("asmp:connectionstring");
         
         if(connectionString == null)
         {
@@ -33,7 +33,7 @@ public static class IServiceCollectionExtensions
         }
 
         return services
-            .AddDbContextPool<MeasurementContext>(options => {
+            .AddDbContextPool<AsmpContext>(options => {
                 options.UseMySQL(connectionString);
             });
     }
