@@ -15,7 +15,7 @@ public class Aggregator : IProcessor
     )
     {
         _statisticRepository = statisticRepository ?? throw new ArgumentNullException(nameof(statisticRepository));
-        _measurementRepository = measurementRepository ?? throw new ArgumentNullException(nameof(_measurementRepository));
+        _measurementRepository = measurementRepository ?? throw new ArgumentNullException(nameof(measurementRepository));
     }
 
     public async Task RunAsync(CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ public class Aggregator : IProcessor
         {
             await _statisticRepository.CreateStatisticsAsync();
             await _measurementRepository.CleanMeasurementsAsync();
-            await Task.Delay(MilliSecondConstants.FiveMinutes);
+            await Task.Delay(MilliSecondConstants.FiveMinutes, cancellationToken);
         }
     }
 }

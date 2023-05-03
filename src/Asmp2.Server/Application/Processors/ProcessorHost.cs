@@ -3,6 +3,7 @@ using Asmp2.Server.Core.Processors;
 using Asmp2.Server.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace Asmp2.Server.Application.Processors;
 public class ProcessorHost : IProcessorHost
@@ -17,22 +18,28 @@ public class ProcessorHost : IProcessorHost
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var processors = Services.GetServices<IProcessor>();
-        var context = Services.GetService<AsmpContext>();
+        EnsureEnvironment();
+
+        await Task.WhenAll(processors.Select(p => RunProcessor(p, cancellationToken)));
+    }
+
+    private void EnsureEnvironment()
+    {
+        var context = Services.GetService<AsmpContext>()
+            ?? throw new InvalidOperationException("Not able to resolve asmp context");
         
+        context.Database.EnsureCreated();
+    }
+
+    private async Task RunProcessor(IProcessor processor, CancellationToken cancellationToken)
+    {
         try
         {
-            if(context == null)
-            {
-                throw new InvalidOperationException("Not able to resolve asmp context");
-            }
-
-            context.Database.EnsureCreated();
-
-            await Task.WhenAll(processors.Select(p => p.RunAsync(cancellationToken)));
+            await processor.RunAsync(cancellationToken);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Processor {processor.GetType().Name} crashed: {ex.Message}, stack: {ex.StackTrace}");
             throw;
         }
     }
