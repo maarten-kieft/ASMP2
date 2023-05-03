@@ -31,7 +31,7 @@ public class StatisticEntity
     public decimal PowerSupplyTotalLowEnd { get; set; }
     
     [Precision(18, 3)]
-    public decimal PowerSupplyeTotalRegularStart { get; set; }
+    public decimal PowerSupplyTotalRegularStart { get; set; }
     
     [Precision(18, 3)]
     public decimal PowerSupplyTotalRegularEnd { get; set; }
