@@ -30,4 +30,20 @@ public class MeasurementRepository : IMeasurementRepository
         meterEntity.Measurements.Add(measurementEntity);
         await _context.SaveChangesAsync();
     }
+
+    public Task CleanMeasurementsAsync()
+    {
+        var latestStatistic = _context.Statistics.OrderByDescending(s => s.TimestampStart).FirstOrDefault();
+        
+        if(latestStatistic == null)
+        {
+            return Task.CompletedTask;
+        }
+
+        _context.Measurements.RemoveRange(
+            _context.Measurements.Where(m => m.Timestamp < latestStatistic.TimestampStart)
+        );
+
+        return _context.SaveChangesAsync();
+    }
 }

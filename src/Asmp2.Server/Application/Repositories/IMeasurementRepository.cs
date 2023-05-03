@@ -3,4 +3,5 @@
 public interface IMeasurementRepository
 {
     Task SaveMeasurementAsync(Measurement measurement);
+    Task CleanMeasurementsAsync();
 }

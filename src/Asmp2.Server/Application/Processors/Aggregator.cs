@@ -7,10 +7,15 @@ namespace Asmp2.Server.Application.Processors;
 public class Aggregator : IProcessor
 {
     private readonly IStatisticRepository _statisticRepository;
+    private readonly IMeasurementRepository _measurementRepository;
 
-    public Aggregator(IStatisticRepository statisticRepository)
+    public Aggregator(
+        IStatisticRepository statisticRepository, 
+        IMeasurementRepository measurementRepository
+    )
     {
         _statisticRepository = statisticRepository ?? throw new ArgumentNullException(nameof(statisticRepository));
+        _measurementRepository = measurementRepository ?? throw new ArgumentNullException(nameof(_measurementRepository));
     }
 
     public async Task RunAsync(CancellationToken cancellationToken)
@@ -18,6 +23,7 @@ public class Aggregator : IProcessor
         while (!cancellationToken.IsCancellationRequested)
         {
             await _statisticRepository.CreateStatisticsAsync();
+            await _measurementRepository.CleanMeasurementsAsync();
             await Task.Delay(MilliSecondConstants.FiveMinutes);
         }
     }
