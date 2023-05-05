@@ -25,5 +25,6 @@ public class StatisticRepository : IStatisticRepository
         var query = StatisticQueries.GenerateStatistics(startTimestamp, endTimestamp);
 
         await _context.Database.ExecuteSqlRawAsync(query);
+        await _context.SaveChangesAsync();
     }
 }
