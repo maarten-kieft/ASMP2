@@ -42,5 +42,4 @@ public static class StatisticQueries
 	              MeterId
 	            , str_to_date(date_format(timestamp, '%Y-%m-%d %H:00:00'),'%Y-%m-%d %H:00:00');";
     }
-
 }

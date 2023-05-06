@@ -44,6 +44,7 @@ public class Startup
             endpoints.MapRazorPages();
             endpoints.MapControllers();
             endpoints.MapHub<MeasurementHub>("/measurementhub");
+            endpoints.MapFallback(async context => { await context.Response.WriteAsync("Fallback, jep"); });
             endpoints.MapFallbackToFile("index.html");
             endpoints.MapGet("/hoi", async context =>
             {

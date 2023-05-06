@@ -32,9 +32,11 @@ public static class IServiceCollectionExtensions
             ?? throw new InvalidOperationException("Cannot start persistence layer since the connectionstring setting is not set");
         
         return services
-            .AddDbContextPool<AsmpContext>(options => {
+            .AddDbContext<AsmpContext>(options => {
                 options.UseMySQL(connectionString);
-            });
+            },
+            ServiceLifetime.Transient
+        );
     }
 
     private static IServiceCollection AddMappers(this IServiceCollection services)

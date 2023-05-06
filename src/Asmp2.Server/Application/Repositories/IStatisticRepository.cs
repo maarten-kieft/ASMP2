@@ -3,4 +3,5 @@
 public interface IStatisticRepository
 {
     Task CreateStatisticsAsync();
+    IEnumerable<Statistic> GetStatistics(Period period, DateTimeOffset startDateTime);
 }
