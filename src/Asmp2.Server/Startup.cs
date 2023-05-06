@@ -32,7 +32,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
-        app.UseResponseCompression();
+        //app.UseResponseCompression();
         app.UseDeveloperExceptionPage();
         app.UseWebAssemblyDebugging();
         app.UseBlazorFrameworkFiles();

@@ -3,7 +3,28 @@
 @inject NavigationManager Navigation
 @page "/"
 
-<h1>@currentMeasurement?.PowerUsage.Current</h1>
+
+<div class="row">
+    <div class="col-12">
+       
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <h1>Now</h1>
+        <h3>@currentMeasurement?.PowerUsage.Current</h3>
+    </div>
+    <div class="col-6">
+        <h1>Last hour</h1>
+        Huidig stroom verbruik in grafiek
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <Overview/>
+    </div>
+</div>
+
 
 
 

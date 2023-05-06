@@ -17,7 +17,6 @@ public class StatisticController : ControllerBase
     [HttpGet("{period}/{startDateTime}")]
     public IEnumerable<Statistic> Get(Period period, DateTimeOffset startDateTime)
     {
-        var endDateTime = startDateTime.CalculatePeriodEndDateTime(period);
         var statistics = _statisticRepository.GetStatistics(period, startDateTime);
 
         return statistics;

@@ -5,4 +5,7 @@ public record PowerStatistic(
     decimal TotalLowEnd,
     decimal TotalRegularStart,
     decimal TotalRegularEnd
-);
+)
+{
+    public decimal Total => (TotalLowEnd - TotalLowStart) + (TotalRegularEnd - TotalRegularStart);
+}

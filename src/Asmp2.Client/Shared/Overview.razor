@@ -1,0 +1,72 @@
+﻿@using Asmp2.Shared.Model;
+@inject HttpClient Http
+
+
+<h1>Overview</h1>
+Grafieken afgelopen periode
+<RadzenChart SeriesClick=@OnSeriesClick style="height: 400px">
+    <RadzenColumnSeries Data="@Data" CategoryProperty="Quarter" Title="2020" LineType="LineType.Dashed" ValueProperty="Revenue">
+        <RadzenSeriesDataLabels Visible="@showDataLabels" />
+    </RadzenColumnSeries>
+    <RadzenValueAxis Formatter="@FormatAsUSD">
+        <RadzenGridLines Visible="true" />
+        <RadzenAxisTitle Text="Revenue in USD" />
+    </RadzenValueAxis>
+    <RadzenBarOptions Radius="5" />
+</RadzenChart>
+
+@code {
+    private List<DataItem> Data = new List<DataItem>();
+    //private List<Statistic> statistics = new List<Statistic>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var statistics = await Http.GetFromJsonAsync<List<Statistic>>("/statistic/day/2023-05-05");
+
+        Data = statistics.Select(s => new DataItem { Quarter = s.TimestampStart.ToString("HH uur"), Revenue = s.PowerUsage.Total }).ToList();
+
+    }
+
+    bool showDataLabels = false;
+
+    void OnSeriesClick(SeriesClickEventArgs args)
+    {
+        
+    }
+
+    class DataItem
+    {
+        public string Quarter { get; set; }
+        public decimal Revenue { get; set; }
+    }
+
+    string FormatAsUSD(object value)
+    {
+        return value.ToString();
+    }
+
+    DataItem[] revenue2019 = new DataItem[]
+    {
+    new DataItem
+    {
+        Quarter = "Q1",
+        Revenue = 234000
+    },
+    new DataItem
+    {
+        Quarter = "Q2",
+        Revenue = 284000
+    },
+    new DataItem
+    {
+        Quarter = "Q3",
+        Revenue = 274000
+    },
+    new DataItem
+    {
+        Quarter = "Q4",
+        Revenue = 294000
+    },
+    };
+}
