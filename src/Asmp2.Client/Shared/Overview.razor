@@ -3,16 +3,11 @@
 
 
 <h1>Overview</h1>
-Grafieken afgelopen periode
 <RadzenChart SeriesClick=@OnSeriesClick style="height: 400px">
-    <RadzenColumnSeries Data="@Data" CategoryProperty="Quarter" Title="2020" LineType="LineType.Dashed" ValueProperty="Revenue">
+    <RadzenColumnSeries Data="@Data" CategoryProperty="Timestamp" Title="Power usage" LineType="LineType.Dashed" ValueProperty="TotalPowerUsage">
         <RadzenSeriesDataLabels Visible="@showDataLabels" />
     </RadzenColumnSeries>
-    <RadzenValueAxis Formatter="@FormatAsUSD">
-        <RadzenGridLines Visible="true" />
-        <RadzenAxisTitle Text="Revenue in USD" />
-    </RadzenValueAxis>
-    <RadzenBarOptions Radius="5" />
+    <RadzenColumnOptions Radius="15" />
 </RadzenChart>
 
 @code {
@@ -24,7 +19,7 @@ Grafieken afgelopen periode
     {
         var statistics = await Http.GetFromJsonAsync<List<Statistic>>("/statistic/day/2023-05-05");
 
-        Data = statistics.Select(s => new DataItem { Quarter = s.TimestampStart.ToString("HH uur"), Revenue = s.PowerUsage.Total }).ToList();
+        Data = statistics.Select(s => new DataItem { Timestamp = s.TimestampStart.ToString("HH:00"), TotalPowerUsage = s.PowerUsage.Total }).ToList();
 
     }
 
@@ -37,36 +32,12 @@ Grafieken afgelopen periode
 
     class DataItem
     {
-        public string Quarter { get; set; }
-        public decimal Revenue { get; set; }
+        public string Timestamp { get; set; }
+        public decimal TotalPowerUsage { get; set; }
     }
 
     string FormatAsUSD(object value)
     {
         return value.ToString();
     }
-
-    DataItem[] revenue2019 = new DataItem[]
-    {
-    new DataItem
-    {
-        Quarter = "Q1",
-        Revenue = 234000
-    },
-    new DataItem
-    {
-        Quarter = "Q2",
-        Revenue = 284000
-    },
-    new DataItem
-    {
-        Quarter = "Q3",
-        Revenue = 274000
-    },
-    new DataItem
-    {
-        Quarter = "Q4",
-        Revenue = 294000
-    },
-    };
 }
