@@ -1,43 +1,17 @@
 ﻿@using Asmp2.Shared.Model;
+@using System.Globalization;
 @inject HttpClient Http
 
-
 <h1>Overview</h1>
-<RadzenChart SeriesClick=@OnSeriesClick style="height: 400px">
-    <RadzenColumnSeries Data="@Data" CategoryProperty="Timestamp" Title="Power usage" LineType="LineType.Dashed" ValueProperty="TotalPowerUsage">
-        <RadzenSeriesDataLabels Visible="@showDataLabels" />
+<RadzenChart SeriesClick=@HandleSeriesClick style="height: 400px">
+    <RadzenColumnSeries 
+        Data="@statistics" 
+        CategoryProperty="TimestampStart.DateTime" 
+        Title="Power usage" 
+        LineType="LineType.Dashed" 
+        ValueProperty="PowerUsage.Total">
     </RadzenColumnSeries>
-    <RadzenColumnOptions Radius="15" />
+    <RadzenColumnOptions Radius="25" />
+    <RadzenLegend Position="LegendPosition.Bottom" />
 </RadzenChart>
 
-@code {
-    private List<DataItem> Data = new List<DataItem>();
-    //private List<Statistic> statistics = new List<Statistic>();
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        var statistics = await Http.GetFromJsonAsync<List<Statistic>>("/statistic/day/2023-05-05");
-
-        Data = statistics.Select(s => new DataItem { Timestamp = s.TimestampStart.ToString("HH:00"), TotalPowerUsage = s.PowerUsage.Total }).ToList();
-
-    }
-
-    bool showDataLabels = false;
-
-    void OnSeriesClick(SeriesClickEventArgs args)
-    {
-        
-    }
-
-    class DataItem
-    {
-        public string Timestamp { get; set; }
-        public decimal TotalPowerUsage { get; set; }
-    }
-
-    string FormatAsUSD(object value)
-    {
-        return value.ToString();
-    }
-}

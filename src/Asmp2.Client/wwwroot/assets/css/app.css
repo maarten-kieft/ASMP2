@@ -20,16 +20,20 @@
 
 #application-loader{
     margin-top: 50px;
-    width:200px;
+    width:100px;
     margin-left:auto;
     margin-right:auto;
-    font-weight: bolder;
+    font-weight: bolder
 }
 
-    #application-loader .spinner-border{
-        display:block;
-        margin-bottom: 10px;
-        --bs-spinner-width:100px;
-        --bs-spinner-height:100px;
-        --bs-spinner-border-width:10px;
-    }
+.application-loader-text{
+    text-align:center;
+}
+
+#application-loader .spinner-border {
+    display: block;
+    margin-bottom: 10px;
+    --bs-spinner-width: 100px;
+    --bs-spinner-height: 100px;
+    --bs-spinner-border-width: 10px;
+}
