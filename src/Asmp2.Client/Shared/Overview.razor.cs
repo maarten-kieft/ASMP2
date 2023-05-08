@@ -31,8 +31,14 @@ public partial class Overview
         if (period == Period.Year)
         {
             period = Period.Month;
-            timestampStart = ((Statistic)args.Data).TimestampStart;
         }
+
+        if(period == Period.Month)
+        {
+            period = Period.Day;
+        }
+
+         timestampStart = ((Statistic)args.Data).TimestampStart;
 
         return LoadData();
     }
