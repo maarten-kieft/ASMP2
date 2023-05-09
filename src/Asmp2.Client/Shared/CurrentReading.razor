@@ -1,0 +1,9 @@
+﻿@using Asmp2.Shared.Model;
+<h1>Now</h1>
+<h3>@CurrentPowerUsage</h3>
+@code {
+    [Parameter]
+    public Measurement? CurrentMeasurement { get; set; }
+
+    private string CurrentPowerUsage => (CurrentMeasurement?.PowerUsage.Current * 100)?.ToString("#") ?? "-";
+}

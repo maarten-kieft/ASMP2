@@ -28,14 +28,16 @@ public partial class Overview
 
     private Task HandleSeriesClick(SeriesClickEventArgs args)
     {
+        if (period == Period.Month)
+        {
+            period = Period.Day;
+            formatTimestampPattern = "HH:mm";
+        }
+
         if (period == Period.Year)
         {
             period = Period.Month;
-        }
-
-        if(period == Period.Month)
-        {
-            period = Period.Day;
+            formatTimestampPattern = "dd-MM";
         }
 
          timestampStart = ((Statistic)args.Data).TimestampStart;

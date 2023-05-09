@@ -11,7 +11,8 @@
         LineType="LineType.Dashed" 
         ValueProperty="PowerUsage.Total">
     </RadzenColumnSeries>
-    <RadzenColumnOptions Radius="25" />
+    <RadzenColumnOptions Radius="10" />
+    <RadzenCategoryAxis Formatter="(cateregory) => ((DateTime)cateregory).ToString(formatTimestampPattern, CultureInfo.InvariantCulture)"/>
     <RadzenLegend Position="LegendPosition.Bottom" />
 </RadzenChart>
 
