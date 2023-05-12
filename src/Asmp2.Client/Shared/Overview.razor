@@ -11,6 +11,12 @@
         LineType="LineType.Dashed" 
         ValueProperty="PowerUsage.Total">
     </RadzenColumnSeries>
+    <RadzenColumnSeries Data="@statistics"
+                        CategoryProperty="TimestampStart.DateTime"
+                        Title="Power supply"
+                        LineType="LineType.Dashed"
+                        ValueProperty="PowerSupply.Total">
+    </RadzenColumnSeries>
     <RadzenColumnOptions Radius="10" />
     <RadzenCategoryAxis Formatter="(cateregory) => ((DateTime)cateregory).ToString(formatTimestampPattern, CultureInfo.InvariantCulture)"/>
     <RadzenLegend Position="LegendPosition.Bottom" />
