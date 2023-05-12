@@ -1,9 +1,18 @@
 ﻿@using Asmp2.Shared.Model;
 <h1>Now</h1>
-<h3>@CurrentPowerUsage</h3>
+<h3>@(currentPowerUsage?.ToString("#") ?? "-")</h3>
 @code {
-    [Parameter]
-    public Measurement? CurrentMeasurement { get; set; }
+    private Measurement? currentMeasurement;
+    private decimal? currentPowerUsage;
 
-    private string CurrentPowerUsage => (CurrentMeasurement?.PowerUsage.Current * 100)?.ToString("#") ?? "-";
+    [Parameter]
+    public Measurement? CurrentMeasurement
+    {
+        get { return currentMeasurement; }
+        set
+        {
+            currentMeasurement = value;
+            currentPowerUsage = (CurrentMeasurement?.PowerUsage.Current - CurrentMeasurement?.PowerSupply.Current) * 1000;
+        }
+    }
 }
