@@ -1,4 +1,4 @@
-﻿using Asmp2.Server.Application.Repositories;
+﻿ using Asmp2.Server.Application.Repositories;
 using Asmp2.Server.Core.Extensions;
 
 namespace Asmp2.Server.Web.Controllers;
@@ -14,10 +14,10 @@ public class StatisticController : ControllerBase
         _statisticRepository = statisticRepository ?? throw new ArgumentNullException(nameof(statisticRepository));
     }
 
-    [HttpGet("{period}/{startDateTime}")]
-    public IEnumerable<Statistic> Get(Period period, DateTimeOffset startDateTime)
+    [HttpGet("{meterId}/{period}/{startDateTime}")]
+    public IEnumerable<Statistic> Get(string meterId, Period period, DateTimeOffset startDateTime)
     {
-        var statistics = _statisticRepository.GetStatistics(period, startDateTime);
+        var statistics = _statisticRepository.GetStatistics(meterId, period, startDateTime);
 
         return statistics;
     }

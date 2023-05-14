@@ -29,11 +29,12 @@ public class StatisticRepository : IStatisticRepository
         await _context.SaveChangesAsync();
     }
 
-    public IEnumerable<Statistic> GetStatistics(Period period, DateTimeOffset startDateTime)
+    public IEnumerable<Statistic> GetStatistics(string meterId, Period period, DateTimeOffset startDateTime)
     {
         var endDateTime = startDateTime.CalculatePeriodEndDateTime(period);
 
         return _context.Statistics
+            .Where(s => s.Meter.Name == meterId)
             .Where(s => s.TimestampStart >= startDateTime && s.TimestampEnd < endDateTime)
             .GroupBy(s =>
                 new
