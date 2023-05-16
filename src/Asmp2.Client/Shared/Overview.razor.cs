@@ -1,4 +1,5 @@
-﻿using Asmp2.Shared.Model;
+﻿using Asmp2.Client.Model;
+using Asmp2.Shared.Model;
 using Radzen;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,12 @@ namespace Asmp2.Client.Shared;
 
 public partial class Overview
 {
+    private string? selectedMeterId;
     private DateTimeOffset timestampStart = new DateTimeOffset(new DateTime(DateTime.Today.Year, 1, 1));
     private Period period = Period.Year;
-    private string? selectedMeterId;
     private string formatTimestampPattern = "MMMM";
-    private List<Statistic> statistics = new List<Statistic>();
+    private List<StatisticDataPoint> usageData = new List<StatisticDataPoint>();
+    private List<StatisticDataPoint> supplyData = new List<StatisticDataPoint>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,7 +35,24 @@ public partial class Overview
         }
 
         var uri = $"/statistic/{selectedMeterId}/{period}/{timestampStart.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
-        statistics = await Http.GetFromJsonAsync<List<Statistic>>(uri) ?? new List<Statistic>();
+        var statistics = await Http.GetFromJsonAsync<List<Statistic>>(uri) ?? new List<Statistic>();
+        
+        usageData = statistics.Select(s =>
+                new StatisticDataPoint
+                {
+                    Timestamp = s.TimestampStart.LocalDateTime,
+                    Value = s.PowerUsage.Total
+                }
+               ).ToList();
+        
+        supplyData = statistics.Select(s =>
+                new StatisticDataPoint
+                {
+                    Timestamp = s.TimestampStart.LocalDateTime,
+                    Value = -s.PowerSupply.Total
+                }
+               ).ToList();
+
     }
 
     private Task HandleSeriesClick(SeriesClickEventArgs args)
@@ -50,7 +69,7 @@ public partial class Overview
             formatTimestampPattern = "dd-MM";
         }
 
-         timestampStart = ((Statistic)args.Data).TimestampStart;
+         timestampStart = ((StatisticDataPoint)args.Data).Timestamp;
 
         return LoadData();
     }

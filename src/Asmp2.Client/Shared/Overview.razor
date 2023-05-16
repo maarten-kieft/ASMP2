@@ -3,22 +3,31 @@
 @inject HttpClient Http
 
 <h1>Overview</h1>
-<RadzenChart SeriesClick=@HandleSeriesClick style="height: 400px">
-    <RadzenColumnSeries 
-        Data="@statistics" 
-        CategoryProperty="TimestampStart.DateTime" 
-        Title="Power usage" 
-        LineType="LineType.Dashed" 
-        ValueProperty="PowerUsage.Total">
-    </RadzenColumnSeries>
-    <RadzenColumnSeries Data="@statistics"
-                        CategoryProperty="TimestampStart.DateTime"
-                        Title="Power supply"
-                        LineType="LineType.Dashed"
-                        ValueProperty="PowerSupply.Total">
-    </RadzenColumnSeries>
-    <RadzenColumnOptions Radius="10" />
-    <RadzenCategoryAxis Formatter="(cateregory) => ((DateTime)cateregory).ToString(formatTimestampPattern, CultureInfo.InvariantCulture)"/>
-    <RadzenLegend Position="LegendPosition.Bottom" />
-</RadzenChart>
+
+@if (usageData.Any())
+{
+    <RadzenChart SeriesClick="@HandleSeriesClick">
+        <RadzenStackedColumnSeries Data="@supplyData"
+                               CategoryProperty="Timestamp"
+                               Title="Power supply"
+                               LineType="LineType.Dashed"
+                               ValueProperty="Value">
+        </RadzenStackedColumnSeries>
+        <RadzenStackedColumnSeries Data="@usageData"
+                               CategoryProperty="Timestamp"
+                               Title="Power usage"
+                               LineType="LineType.Dashed"
+                               ValueProperty="Value">
+        </RadzenStackedColumnSeries>
+        <RadzenColumnOptions Radius="5" Width="20" />
+        <RadzenCategoryAxis Padding="20" />
+        <RadzenCategoryAxis Formatter="(cateregory) => ((DateTime)cateregory).ToString(formatTimestampPattern, CultureInfo.InvariantCulture)" />
+        <RadzenLegend Position="LegendPosition.Bottom" />
+        <RadzenValueAxis Min="-50" Max="50" Step="10">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="KwH" />
+        </RadzenValueAxis>
+    </RadzenChart>
+}
+
 
