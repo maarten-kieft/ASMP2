@@ -1,6 +1,7 @@
 ﻿using Asmp2.Client;
 using Asmp2.Server.Core.Processors;
 using Asmp2.Server.Persistence.Contexts;
+using Asmp2.Shared.Constants;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
@@ -40,7 +41,12 @@ public class ProcessorHost : IProcessorHost
         catch (Exception ex)
         {
             Console.WriteLine($"Processor {processor.GetType().Name} crashed: {ex.Message}, stack: {ex.StackTrace}");
-            throw;
+            Console.WriteLine("Sleeping for 1 minute");
+            await Task.Delay(MilliSecondConstants.OneMinute);
+            Console.WriteLine("Restarting processor");
+            
+            await RunProcessor(processor, cancellationToken);
+
         }
     }
 }
