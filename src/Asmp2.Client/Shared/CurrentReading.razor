@@ -1,9 +1,21 @@
 ﻿@using Asmp2.Shared.Model;
 <h1>Now</h1>
-<h3>@(currentPowerUsage?.ToString("#") ?? "-")</h3>
+
+<RadzenArcGauge Style="width: 100%; height: 200px;">
+    <RadzenArcGaugeScale Step="800" Min="-4000" Max="4000" MinorStep="2" Radius="1.5" TickPosition=@GaugeTickPosition.Outside Y="0.9" Margin="0">
+        <RadzenArcGaugeScaleValue Value=@currentPowerUsage ShowValue=@true>
+            <Template Context="pointer">
+                <h4>
+                    @(currentPowerUsage.ToString("#") ?? "-") <sup>watt</sup>
+                </h4>
+            </Template>
+        </RadzenArcGaugeScaleValue>
+    </RadzenArcGaugeScale>
+</RadzenArcGauge>
+
 @code {
     private Measurement? currentMeasurement;
-    private decimal? currentPowerUsage;
+    private double currentPowerUsage;
 
     [Parameter]
     public Measurement? CurrentMeasurement
@@ -12,7 +24,10 @@
         set
         {
             currentMeasurement = value;
-            currentPowerUsage = (CurrentMeasurement?.PowerUsage.Current - CurrentMeasurement?.PowerSupply.Current) * 1000;
+            currentPowerUsage = (double)(
+                (CurrentMeasurement?.PowerUsage.Current).GetValueOrDefault() - 
+                (CurrentMeasurement?.PowerSupply.Current).GetValueOrDefault()
+            ) * 1000;
         }
     }
 }

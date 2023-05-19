@@ -16,6 +16,9 @@ public partial class Overview
     private DateTimeOffset timestampStart = new DateTimeOffset(new DateTime(DateTime.Today.Year, 1, 1));
     private Period period = Period.Year;
     private string formatTimestampPattern = "MMMM";
+    private decimal chartMaxValue;
+    private decimal chartMinValue;
+    private decimal chartStepSize;
     private List<StatisticDataPoint> usageData = new List<StatisticDataPoint>();
     private List<StatisticDataPoint> supplyData = new List<StatisticDataPoint>();
 
@@ -29,22 +32,26 @@ public partial class Overview
 
     private async Task LoadData()
     {
-        if(selectedMeterId == null)
+        if (selectedMeterId == null)
         {
             return;
         }
 
         var uri = $"/statistic/{selectedMeterId}/{period}/{timestampStart.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}";
         var statistics = await Http.GetFromJsonAsync<List<Statistic>>(uri) ?? new List<Statistic>();
-        
-        usageData = statistics.Select(s =>
-                new StatisticDataPoint
-                {
-                    Timestamp = s.TimestampStart.LocalDateTime,
-                    Value = s.PowerUsage.Total
-                }
-               ).ToList();
-        
+
+        InitializeChartSettings(statistics);
+    }
+
+    private void InitializeChartSettings(List<Statistic> statistics)
+    {
+        usageData = statistics.Select(s => new StatisticDataPoint 
+               {
+                   Timestamp = s.TimestampStart.LocalDateTime,
+                   Value = s.PowerUsage.Total
+               }
+              ).ToList();
+
         supplyData = statistics.Select(s =>
                 new StatisticDataPoint
                 {
@@ -53,24 +60,27 @@ public partial class Overview
                 }
                ).ToList();
 
+        chartMaxValue = decimal.Round(usageData.Max(d => d.Value) * 1.1m,0);
+        chartMinValue = decimal.Round(supplyData.Min(d => d.Value) * 1.1m, 0);
+        chartStepSize = decimal.Round(chartMaxValue - chartMinValue / 10, 0);
     }
 
-    private Task HandleSeriesClick(SeriesClickEventArgs args)
+    private async Task HandleSeriesClick(SeriesClickEventArgs args)
     {
-        if (period == Period.Month)
+        switch (period)
         {
-            period = Period.Day;
-            formatTimestampPattern = "HH:mm";
+            case Period.Month:
+                period = Period.Day;
+                formatTimestampPattern = "HH:mm";
+                break;
+            case Period.Year:
+                period = Period.Month;
+                formatTimestampPattern = "dd-MM";
+                break;
         }
 
-        if (period == Period.Year)
-        {
-            period = Period.Month;
-            formatTimestampPattern = "dd-MM";
-        }
+        timestampStart = ((StatisticDataPoint)args.Data).Timestamp;
 
-         timestampStart = ((StatisticDataPoint)args.Data).Timestamp;
-
-        return LoadData();
+        await LoadData();
     }
 }
