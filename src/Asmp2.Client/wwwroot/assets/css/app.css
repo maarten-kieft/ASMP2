@@ -37,3 +37,29 @@
     --bs-spinner-height: 100px;
     --bs-spinner-border-width: 10px;
 }
+
+.menu{
+    height:60px;
+    width:100%;
+    background-color:#000000;
+    border-bottom: 2px solid #dddddd;
+    padding: 10px;
+}
+
+.menu h1 {
+    color: #ffffff;
+}
+
+.section {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.section .col-md-6{
+    margin-bottom:20px;
+}
+
+.section-odd {
+    background-color:#fbfbfb;
+}
