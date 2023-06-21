@@ -17,6 +17,10 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.AddConsole();
+                });
             })
             .Build();
 

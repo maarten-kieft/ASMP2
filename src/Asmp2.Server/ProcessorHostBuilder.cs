@@ -11,6 +11,7 @@ public static class ProcessorHostBuilder
     public static IProcessorHost Build(IConfiguration configuration)
     {
         var provider = new ServiceCollection()
+            .AddLogging(builder => { builder.AddConsole(); })
             .AddApplicationServices()
             .AddInfrastructureServices(configuration)
             .AddPersistance(configuration)

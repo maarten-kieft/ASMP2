@@ -1,23 +1,25 @@
-﻿using Asmp2.Client;
-using Asmp2.Server.Core.Processors;
+﻿using Asmp2.Server.Core.Processors;
 using Asmp2.Server.Persistence.Contexts;
 using Asmp2.Shared.Constants;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
 
 namespace Asmp2.Server.Application.Processors;
 public class ProcessorHost : IProcessorHost
 {
-    public ProcessorHost(IServiceProvider services)
+    private readonly ILogger<ProcessorHost> _logger;
+
+    public ProcessorHost(IServiceProvider services, ILogger<ProcessorHost> logger)
     {
         Services = services ?? throw new ArgumentNullException(nameof(services));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public IServiceProvider Services { get; }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
+        _logger.LogInformation("Booting processor host");
+
         var processors = Services.GetServices<IProcessor>();
         EnsureEnvironment();
 
@@ -28,7 +30,7 @@ public class ProcessorHost : IProcessorHost
     {
         var context = Services.GetService<AsmpContext>()
             ?? throw new InvalidOperationException("Not able to resolve asmp context");
-        
+
         context.Database.EnsureCreated();
     }
 
@@ -40,13 +42,13 @@ public class ProcessorHost : IProcessorHost
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Processor {processor.GetType().Name} crashed.");
-            Console.WriteLine($"Message: {ex.Message}");
-            Console.WriteLine($"Stacktrace: {ex.StackTrace}");
-            Console.WriteLine("Sleeping for 1 minute");
+            _logger.LogError($"Processor {processor.GetType().Name} crashed.");
+            _logger.LogError(ex,$"Message: {ex.Message}");
+            _logger.LogError(ex,$"Stacktrace: {ex.StackTrace}");
+            _logger.LogInformation("Sleeping for 1 minute");
             await Task.Delay(MilliSecondConstants.OneMinute);
-            Console.WriteLine("Restarting processor");
-            
+            _logger.LogInformation("Restarting processor");
+
             await RunProcessor(processor, cancellationToken);
 
         }
