@@ -40,7 +40,9 @@ public class ProcessorHost : IProcessorHost
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Processor {processor.GetType().Name} crashed: {ex.Message}, stack: {ex.StackTrace}");
+            Console.WriteLine($"Processor {processor.GetType().Name} crashed.");
+            Console.WriteLine($"Message: {ex.Message}");
+            Console.WriteLine($"Stacktrace: {ex.StackTrace}");
             Console.WriteLine("Sleeping for 1 minute");
             await Task.Delay(MilliSecondConstants.OneMinute);
             Console.WriteLine("Restarting processor");
