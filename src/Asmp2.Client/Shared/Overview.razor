@@ -7,20 +7,20 @@
 @if (usageData.Any())
 {
     <RadzenChart SeriesClick="@HandleSeriesClick">
-        <RadzenStackedColumnSeries Data="@supplyData"
+        <RadzenColumnSeries Data="@supplyData"
                                CategoryProperty="Timestamp"
                                Title="Power supply"
                                LineType="LineType.Dashed"
                                ValueProperty="Value"
         Fill="#00ff00">
-        </RadzenStackedColumnSeries>
-        <RadzenStackedColumnSeries Data="@usageData"
+        </RadzenColumnSeries>
+        <RadzenColumnSeries Data="@usageData"
                                CategoryProperty="Timestamp"
                                Title="Power usage"
                                Fill="#0000ff"
                                LineType="LineType.Dashed"
                                ValueProperty="Value">
-        </RadzenStackedColumnSeries>
+        </RadzenColumnSeries>
         <RadzenColumnOptions Radius="5" Width="20"  />
         <RadzenCategoryAxis Padding="20" />
         <RadzenCategoryAxis Formatter="(cateregory) => ((DateTime)cateregory).ToString(formatTimestampPattern, CultureInfo.InvariantCulture)" />

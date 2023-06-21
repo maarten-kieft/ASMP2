@@ -56,12 +56,12 @@ public partial class Overview
                 new StatisticDataPoint
                 {
                     Timestamp = s.TimestampStart.LocalDateTime,
-                    Value = -s.PowerSupply.Total
+                    Value = s.PowerSupply.Total
                 }
                ).ToList();
 
-        chartMaxValue = decimal.Round(usageData.Max(d => d.Value) * 1.1m,0);
-        chartMinValue = decimal.Round(supplyData.Min(d => d.Value) * 1.1m, 0);
+        chartMaxValue = decimal.Round(statistics.Max(s => Math.Max(s.PowerUsage.Total, s.PowerSupply.Total)) * 1.2m,0);
+        chartMinValue = decimal.Round(statistics.Min(s => Math.Min(s.PowerUsage.Total, s.PowerSupply.Total)) * 0.8m, 0);
         chartStepSize = decimal.Round(chartMaxValue - chartMinValue / 10, 0);
     }
 
