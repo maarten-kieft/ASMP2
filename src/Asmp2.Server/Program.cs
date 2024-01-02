@@ -17,8 +17,9 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-                webBuilder.ConfigureLogging(loggingBuilder =>
+                webBuilder.ConfigureLogging((context, loggingBuilder) =>
                 {
+                    loggingBuilder.AddConfiguration(context.Configuration.GetSection("Logging"));
                     loggingBuilder.AddConsole();
                 });
             })
