@@ -38,6 +38,7 @@ public class ProcessorHost : IProcessorHost
     {
         try
         {
+            _logger.LogInformation($"Booting processor '{processor.GetType().Name}'");
             await processor.RunAsync(cancellationToken);
         }
         catch (Exception ex)
