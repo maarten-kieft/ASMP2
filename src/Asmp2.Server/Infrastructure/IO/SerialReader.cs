@@ -24,7 +24,7 @@ public class SerialReader : ISerialReader
 
     private Task Connect(CancellationToken cancellationToken)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        while (!cancellationToken.IsCancellationRequested && !_serialPort.IsOpen)
         {
             var portNames = SerialPort.GetPortNames();
 
