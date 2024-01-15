@@ -1,4 +1,4 @@
-﻿namespace Asmp2.Server.Core.Messaging;
+﻿namespace Asmp2.Server.Application.Messaging;
 
 public abstract class Message
 {

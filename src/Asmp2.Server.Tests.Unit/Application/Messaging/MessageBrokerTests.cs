@@ -1,5 +1,4 @@
 ﻿using Asmp2.Server.Application.Messaging;
-using Asmp2.Server.Core.Messaging;
 
 namespace Asmp2.Server.Tests.Unit.Application.Messaging;
 

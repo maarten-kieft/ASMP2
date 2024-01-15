@@ -1,4 +1,4 @@
-﻿namespace Asmp2.Server.Core.Extensions;
+﻿namespace Asmp2.Server.Application.Extensions;
 
 public static class DateTimeExtensions
 {

@@ -1,8 +1,9 @@
 ﻿using Asmp2.Server.Application.IO;
+using Asmp2.Server.Application.Messaging;
+using Asmp2.Server.Application.Processors;
 using Asmp2.Server.Application.Repositories;
-using Asmp2.Server.Core.Messaging;
 
-namespace Asmp2.Server.Core.Processors;
+namespace Asmp2.Server.Application.Processors;
 
 public class Reader : IProcessor
 {

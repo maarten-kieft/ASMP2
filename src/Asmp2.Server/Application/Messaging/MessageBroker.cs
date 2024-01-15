@@ -1,6 +1,4 @@
-﻿using Asmp2.Server.Core.Messaging;
-
-namespace Asmp2.Server.Application.Messaging;
+﻿namespace Asmp2.Server.Application.Messaging;
 
 public class MessageBroker : IMessageBroker
 {

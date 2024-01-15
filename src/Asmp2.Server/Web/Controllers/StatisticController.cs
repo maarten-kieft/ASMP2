@@ -1,5 +1,4 @@
-﻿ using Asmp2.Server.Application.Repositories;
-using Asmp2.Server.Core.Extensions;
+﻿using Asmp2.Server.Application.Repositories;
 
 namespace Asmp2.Server.Web.Controllers;
 

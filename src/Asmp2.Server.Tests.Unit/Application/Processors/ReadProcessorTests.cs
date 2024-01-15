@@ -1,9 +1,8 @@
 ﻿using Asmp2.Server.Application.IO;
+using Asmp2.Server.Application.Messaging;
+using Asmp2.Server.Application.Processors;
 using Asmp2.Server.Application.Repositories;
-using Asmp2.Server.Core.Messaging;
-using Asmp2.Server.Core.Processors;
 using Moq;
-using Xunit;
 
 namespace Asmp2.Server.Tests.Unit.Processors;
 

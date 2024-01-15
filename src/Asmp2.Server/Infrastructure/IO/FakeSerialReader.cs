@@ -1,5 +1,4 @@
 ﻿using Asmp2.Server.Application.IO;
-using Asmp2.Server.Core.Parsers;
 using Asmp2.Shared.Constants;
 using System.IO.Ports;
 

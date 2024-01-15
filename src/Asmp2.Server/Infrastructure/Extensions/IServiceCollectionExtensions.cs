@@ -1,6 +1,5 @@
 ﻿using Asmp2.Server.Application.IO;
 using Asmp2.Server.Application.Parsers;
-using Asmp2.Server.Core.Parsers;
 using Asmp2.Server.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

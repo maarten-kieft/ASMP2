@@ -1,4 +1,4 @@
-﻿namespace Asmp2.Server.Core.Parsers;
+﻿namespace Asmp2.Server.Application.IO;
 
 public interface IMeasurementParser
 {

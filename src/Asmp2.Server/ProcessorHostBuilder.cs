@@ -1,5 +1,5 @@
 ﻿using Asmp2.Server.Application.Extensions;
-using Asmp2.Server.Core.Processors;
+using Asmp2.Server.Application.Processors;
 using Asmp2.Server.Infrastructure.Extensions;
 using Asmp2.Server.Persistence.Extensions;
 using Microsoft.Extensions.Configuration;

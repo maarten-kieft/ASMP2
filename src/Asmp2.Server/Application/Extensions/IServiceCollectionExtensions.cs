@@ -1,7 +1,5 @@
 ﻿using Asmp2.Server.Application.Messaging;
 using Asmp2.Server.Application.Processors;
-using Asmp2.Server.Core.Messaging;
-using Asmp2.Server.Core.Processors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Asmp2.Server.Application.Extensions;

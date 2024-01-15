@@ -1,5 +1,5 @@
-﻿using Asmp2.Server.Application.Repositories;
-using Asmp2.Server.Core.Extensions;
+﻿using Asmp2.Server.Application.Extensions;
+using Asmp2.Server.Application.Repositories;
 using Asmp2.Server.Persistence.Contexts;
 using Asmp2.Server.Persistence.Queries;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,7 @@ public class StatisticRepository : IStatisticRepository
         var endDateTime = startDateTime.CalculatePeriodEndDateTime(period);
 
         return _context.Statistics
-            .Where(s => s.Meter.Name == meterId)
+            .Where(s => s.Meter != null && s.Meter.Name == meterId)
             .Where(s => s.TimestampStart >= startDateTime && s.TimestampEnd < endDateTime)
             .GroupBy(s =>
                 new

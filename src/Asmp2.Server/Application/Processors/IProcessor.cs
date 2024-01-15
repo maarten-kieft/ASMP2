@@ -1,4 +1,4 @@
-﻿namespace Asmp2.Server.Core.Processors;
+﻿namespace Asmp2.Server.Application.Processors;
 
 public interface IProcessor
 {
