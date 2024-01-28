@@ -3,7 +3,7 @@ using Asmp2.Shared.Constants;
 
 namespace Asmp2.Server.Application.Processors;
 
-public class Aggregator : IProcessor
+public class Aggregator : Processor
 {
     private readonly IStatisticRepository _statisticRepository;
     private readonly IMeasurementRepository _measurementRepository;
@@ -17,7 +17,7 @@ public class Aggregator : IProcessor
         _measurementRepository = measurementRepository ?? throw new ArgumentNullException(nameof(measurementRepository));
     }
 
-    public async Task RunAsync(CancellationToken cancellationToken)
+    protected override async Task RunInternalAsync(CancellationToken cancellationToken)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

@@ -1,11 +1,10 @@
 ﻿using Asmp2.Server.Application.IO;
 using Asmp2.Server.Application.Messaging;
-using Asmp2.Server.Application.Processors;
 using Asmp2.Server.Application.Repositories;
 
 namespace Asmp2.Server.Application.Processors;
 
-public class Reader : IProcessor
+public class Reader : Processor
 {
     private readonly ISerialReader _serialReader;
     private readonly IMessageBroker _messageBroker;
@@ -22,7 +21,7 @@ public class Reader : IProcessor
         _measurementRepository = measurementRepository ?? throw new ArgumentNullException(nameof(measurementRepository));
     }
 
-    public Task RunAsync(CancellationToken cancellationToken)
+    protected override Task RunInternalAsync(CancellationToken cancellationToken)
     {
         _serialReader.Subscribe(ProcessMessageAsync);
 
